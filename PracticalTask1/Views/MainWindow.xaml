@@ -12,18 +12,10 @@
             <TextBlock Text="SIMPLE WPF APP" FontSize="30" TextAlignment="Center" Margin="17,30,17,365" />
 
             <DataGrid x:Name="packagesGrid" AutoGenerateColumns="True" ItemsSource="{Binding Packages}" Margin="17,96,17,126" >
-                <DataGrid.Resources>
-                    <!--<col:ArrayList x:Key="packages">
-                        <local:PackageModel Id="1"  Name="iPhone 6S" Description="Apple" Weight="54990" />
-                        <local:PackageModel Id="2"  Name="ljlj" Description="bjhgkjhg" Weight="123" />
-                        <local:PackageModel Id="3"  Name="iyiouyu 6S" Description="asdfgh" Weight="654" />
-                    </col:ArrayList>-->
-                    
-                </DataGrid.Resources>
             </DataGrid>
 
-            <Button x:Name="SaveButton" Background="LightGray" Margin="300,343,300,71" Height="20" Content="Save"  />
-            <Button x:Name="CancelButton" Background="LightGray" Margin="300,375,300,39" Width="200" Height="20" Content="Cancel" />
+            <Button x:Name="SaveButton" Background="LightGray" Margin="300,343,300,71" Height="20" Content="Save" Command="{Binding UpdateCommand}"  />
+            <Button x:Name="CancelButton" Background="LightGray" Margin="300,375,300,39" Width="200" Height="20" Content="Cancel" Command="{Binding CancelCommand}" />
         </Grid>
     </Viewbox>
 </Window>

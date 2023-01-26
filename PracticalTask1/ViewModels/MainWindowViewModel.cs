@@ -1,4 +1,5 @@
-﻿using PracticalTask1.Database;
+﻿using CommunityToolkit.Mvvm.Input;
+using PracticalTask1.Database;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace PracticalTask1.ViewModels
 {
@@ -28,6 +31,34 @@ namespace PracticalTask1.ViewModels
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
+
+        private ICommand _UpdateCommand;
+
+        public ICommand UpdateCommand
+        {
+            get
+            {
+                _UpdateCommand ??= new RelayCommand(() =>
+                    {
+                        MessageBox.Show("update clicked");
+                    });
+                return _UpdateCommand;
+            }
+        }
+
+        private ICommand _CancelCommand;
+
+        public ICommand CancelCommand
+        {
+            get
+            {
+                _CancelCommand ??= new RelayCommand(() =>
+                {
+                    MessageBox.Show("cancel clicked");
+                });
+                return _CancelCommand;
+            }
         }
     }
 }
