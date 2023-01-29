@@ -1,47 +1,42 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using PracticalTask1.Database;
+using SQLite;
+using System.Collections.ObjectModel;
 
 namespace PracticalTask1.Models
 {
-    public class PackageModel : INotifyPropertyChanged
+    public class PackageModel
     {
-        private string name;
-        private string description;
-        private int weight;
+        public int? Id { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
+        public int? Weight { get; set; }
 
-        public string Id { get; set; }
-        public string Name
+        public DatabaseHandler databaseHandler = new();
+        public void InsertUpdatePackages(ObservableCollection<Package> packages)
         {
-            get => name;
-            set
+            using (var db = new SQLiteConnection(databaseHandler.fullPath, SQLiteOpenFlags.ReadWrite))
             {
-                name = value;
-                OnPropertyChanged("Name");
-            }
-        }
-        public string Description
-        {
-            get => description;
-            set
-            {
-                description = value;
-                OnPropertyChanged("Description");
-            }
-        }
-        public int Weight
-        {
-            get => weight;
-            set
-            {
-                weight = value;
-                OnPropertyChanged("Weight");
+                foreach (var package in packages)
+                {
+                    if (db.Find<Package>(package.Id) != null)
+                    {
+                        db.Update(package);
+                    }
+                    else
+                    {
+                        db.Insert(package);
+                    }
+                }
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        public void GetPackagesFromDatabase(ObservableCollection<Package> packages)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+            packages.Clear();
+            using (var db = new SQLiteConnection(databaseHandler.fullPath, SQLiteOpenFlags.ReadOnly))
+            {
+                db.Table<Package>().ToList().ForEach(i => packages.Add(i));
+            }
         }
     }
 }
