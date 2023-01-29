@@ -11,7 +11,7 @@
         <Grid Height="434.04" Width="800">
             <TextBlock Text="SIMPLE WPF APP" FontSize="30" TextAlignment="Center" Margin="17,30,17,365" />
 
-            <DataGrid x:Name="packagesGrid" AutoGenerateColumns="True" ItemsSource="{Binding Packages}" Margin="17,96,17,126" >
+            <DataGrid x:Name="packagesGrid" AutoGenerateColumns="True" ItemsSource="{Binding Packages,Mode=TwoWay}" Margin="17,96,17,126" >
             </DataGrid>
 
             <Button x:Name="SaveButton" Background="LightGray" Margin="300,343,300,71" Height="20" Content="Save" Command="{Binding UpdateCommand}"  />
